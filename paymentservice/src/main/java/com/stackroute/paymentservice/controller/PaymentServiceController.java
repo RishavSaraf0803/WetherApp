@@ -28,11 +28,12 @@ public class PaymentServiceController {
 			payment = paymentService.getPaymentByCardNo(validate.getCardNo());
 		}
 		catch(MethodNotFoundException e) {
-			return new ResponseEntity<String>("Payment Method is invalid",HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<String>("Payment Method is invalid",HttpStatus.NOT_FOUND);
 		}
 		
 		if(payment.getCvv().equals(validate.getCvv()) && payment.getExpDate().equals(validate.getExpDate())) {
-			return new ResponseEntity<PaymentServiceModel>(payment,HttpStatus.OK);
+			
+			return new ResponseEntity<String>("Payment Successfull",HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("Wrong payment details",HttpStatus.UNAUTHORIZED);
 	

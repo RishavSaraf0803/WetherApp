@@ -26,8 +26,10 @@ public class FavService {
 			List<String> list = fav.getList();
 			list.add(cityName);
 			fav.setList(list);
-			repository.save(fav);
-			return true;
+			if(repository.save(fav) != null)
+				return true;
+			else
+				return false;
 		}
 		else {
 			fav = new FavModel();
@@ -35,8 +37,10 @@ public class FavService {
 			List<String> list = new ArrayList<> ();
 			list.add(cityName);
 			fav.setList(list);
-			repository.insert(fav);
-			return true;
+			if(repository.insert(fav) != null)
+				return true;
+			else
+				return false;
 		}
 	}
 	

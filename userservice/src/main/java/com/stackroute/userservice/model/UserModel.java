@@ -1,11 +1,12 @@
 package com.stackroute.userservice.model;
 
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document
+@Entity
+@Table(name = "User")
 public class UserModel {
 	
 	@Id

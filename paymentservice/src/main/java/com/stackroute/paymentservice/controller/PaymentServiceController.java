@@ -45,7 +45,7 @@ public class PaymentServiceController {
 		
 		if(paymentService.addPayment(payment)) {
 			
-			return new ResponseEntity<PaymentServiceModel>(payment,HttpStatus.OK);
+			return new ResponseEntity<PaymentServiceModel>(payment,HttpStatus.CREATED);
 			
 		}
 		

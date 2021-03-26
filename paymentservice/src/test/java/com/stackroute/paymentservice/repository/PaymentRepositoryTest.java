@@ -1,6 +1,7 @@
 package com.stackroute.paymentservice.repository;
 
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.stackroute.paymentservice.model.PaymentServiceModel;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+
 
 @DataMongoTest
 public class PaymentRepositoryTest {
@@ -37,7 +39,5 @@ public class PaymentRepositoryTest {
 
         paymentRepository.deleteAll();
     }
-
-
 
 }

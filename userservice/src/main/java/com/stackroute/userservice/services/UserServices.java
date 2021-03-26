@@ -5,12 +5,7 @@ import com.stackroute.userservice.exceptions.UserNotFoundException;
 import com.stackroute.userservice.model.UserModel;
 
 public interface UserServices {
-
-	/*
-	 * Should not modify this interface. You have to implement these methods in
-	 * corresponding Impl classes
-	 */
-
+	
 	 UserModel registerUser(UserModel user) throws UserAlreadyExistsException;
 	 UserModel updateUser(String userId, UserModel user) throws UserNotFoundException;
 	 boolean deleteUser(String userId) throws UserNotFoundException;

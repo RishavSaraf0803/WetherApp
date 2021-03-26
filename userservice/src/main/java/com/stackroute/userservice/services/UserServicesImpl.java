@@ -12,24 +12,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServicesImpl implements UserServices{
-
-	/*
-	 * Autowiring should be implemented for the UserRepository. (Use
-	 * Constructor-based autowiring) Please note that we should not create any
-	 * object using the new keyword.
-	 */
 	
 	private final UserRepository userRepository;
 
 	public UserServicesImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
-
-	/*
-	 * This method should be used to save a new user.Call the corresponding method
-	 * of Respository interface.
-	 */
-
+	
 	public UserModel registerUser(UserModel user) throws UserAlreadyExistsException {
 
 		UserModel newUser = userRepository.save(user);
@@ -38,12 +27,7 @@ public class UserServicesImpl implements UserServices{
 			return newUser;
 		throw new UserAlreadyExistsException("User already exists!");
 	}
-
-	/*
-	 * This method should be used to update a existing user.Call the corresponding
-	 * method of Respository interface.
-	 */
-
+	
 	public UserModel updateUser(String userId,UserModel user) throws UserNotFoundException {
 
 		try {
@@ -55,27 +39,22 @@ public class UserServicesImpl implements UserServices{
 		}
 	}
 
-	/*
-	 * This method should be used to delete an existing user. Call the corresponding
-	 * method of Respository interface.
-	 */
-
 	public boolean deleteUser(String userId) throws UserNotFoundException {
 		
-		try {
-			userRepository.deleteById(userId);
-			return true;
-		} 
-		catch (Exception e) {
-			throw new UserNotFoundException("UserNotFoundException");
-		}
+//		try {
+//			userRepository.deleteById(userId);
+//			return true;
+//		} 
+//		catch (Exception e) {
+//			throw new UserNotFoundException("UserNotFoundException");
+//		}
+		
+		UserModel user = userRepository.findById(userId).get();
+		if(user == null) throw new UserNotFoundException("UserNotFoundExceptoin");
+		userRepository.delete(user);
+		return true;
 	}
-
-	/*
-	 * This method should be used to get a user by userId.Call the corresponding
-	 * method of Respository interface.
-	 */
-
+	
 	public UserModel getUserById(String userId) throws UserNotFoundException {
 		
 		try {
@@ -90,11 +69,6 @@ public class UserServicesImpl implements UserServices{
 		}
 	}
 	
-	/*
-	 * This method should be used to validate a user using userId and password.
-	 *  Call the corresponding method of Respository interface.
-	 * 
-	 */
     @Override
     public UserModel findByUserIdAndPassword(String userId, String password) throws UserNotFoundException {
 

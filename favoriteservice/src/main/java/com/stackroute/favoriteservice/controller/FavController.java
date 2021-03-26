@@ -34,14 +34,20 @@ public class FavController {
 	@PostMapping("/{userId}/{city}")
 	public ResponseEntity<?> addCity(@PathVariable String userId, @PathVariable String city) {
 		boolean status = service.addCity(userId, city);
-		
-		return new ResponseEntity<String>("Successfully added city",HttpStatus.CREATED);
+		if(status)
+			return new ResponseEntity<String>("Successfully added city",HttpStatus.CREATED);
+		else
+			return new ResponseEntity<String>("Couldn't add city",HttpStatus.CONFLICT);
 	}
 	
 	@GetMapping("/{userId}")
-	public ResponseEntity<List<String>> getAllCities(@PathVariable String userId) {
+	public ResponseEntity<?> getAllCities(@PathVariable String userId) {
 		List<String> list = service.getAllCities(userId);
-		return new ResponseEntity<>(list, HttpStatus.OK);
+		if(!list.isEmpty())
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		else
+			return new ResponseEntity<>("You have not added any city", HttpStatus.NOT_FOUND);
+			
 	}
 
 	@DeleteMapping("/{userId}/{city}")

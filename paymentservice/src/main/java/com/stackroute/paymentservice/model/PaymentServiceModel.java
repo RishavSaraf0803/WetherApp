@@ -13,7 +13,7 @@ public class PaymentServiceModel {
 	public PaymentServiceModel() {
 		
 	}
-	public PaymentServiceModel(String userName, String cardNo, String cvv, String expDate) {
+	public PaymentServiceModel( String cardNo, String cvv, String expDate) {
 		super();
 		this.cardNo = cardNo;
 		this.cvv = cvv;

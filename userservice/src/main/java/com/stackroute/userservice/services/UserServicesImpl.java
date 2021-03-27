@@ -60,7 +60,7 @@ public class UserServicesImpl implements UserServices{
 		
 		try {
 			Optional<UserModel> user = Optional.ofNullable(this.userRepository.findById(userId)).get();
-			if (!user.isPresent()) {
+			if (user.isPresent()) {
 				return user;
 			} else {
 				throw new UserNotFoundException("UserNotFoundException");

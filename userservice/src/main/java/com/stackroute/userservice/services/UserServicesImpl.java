@@ -1,14 +1,13 @@
 package com.stackroute.userservice.services;
 
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
 import com.stackroute.userservice.exceptions.UserAlreadyExistsException;
 import com.stackroute.userservice.exceptions.UserNotFoundException;
 import com.stackroute.userservice.model.UserModel;
 import com.stackroute.userservice.repositroy.UserRepository;
-
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UserServicesImpl implements UserServices{
@@ -26,55 +25,20 @@ public class UserServicesImpl implements UserServices{
 		if(newUser != null)
 			return newUser;
 		throw new UserAlreadyExistsException("User already exists!");
-	}
-	
-	public UserModel updateUser(String userId,UserModel user) throws UserNotFoundException {
-
-		try {
-			userRepository.save(user);
-			return userRepository.findById(userId).get();
-		}
-		catch(Exception e) {
-			throw new UserNotFoundException("User not found");
-		}
-	}
-
-	public boolean deleteUser(String userId) throws UserNotFoundException {
 		
 //		try {
-//			userRepository.deleteById(userId);
-//			return true;
-//		} 
-//		catch (Exception e) {
-//			throw new UserNotFoundException("UserNotFoundException");
+//			Optional<UserModel> newUser = Optional.ofNullable(this.userRepository.findById(user.getUserId())).get();
+//			if (!newUser.isPresent()) {
+//				this.userRepository.save(user);
+//				return newUser;
+//			}else {
+//				throw new UserAlreadyExistsException("Cannot Register User");
+//			}
+//		} catch (Exception e) {
+//			throw new UserAlreadyExistsException(e.getMessage());
 //		}
-		
-		UserModel user = userRepository.findById(userId).get();
-		if(user == null) throw new UserNotFoundException("UserNotFoundExceptoin");
-		userRepository.delete(user);
-		return true;
 	}
 	
-	public UserModel getUserById(String userId) throws UserNotFoundException {
-		
-		try {
-			UserModel user = userRepository.findById(userId).get();
-			if (user != null) {
-				return user;
-			} else {
-				throw new UserNotFoundException("UserNotFoundException");
-			}
-		} catch (Exception e) {
-			throw new UserNotFoundException("UserNotFoundException");
-		}
-	}
-	
-    @Override
-    public UserModel findByUserIdAndPassword(String userId, String password) throws UserNotFoundException {
-
-    	return userRepository.findByUserIdAndUserPassword(userId, password);
-    }
-    
     @Override
     public boolean saveUser(UserModel user) throws UserAlreadyExistsException {
        
@@ -90,4 +54,52 @@ public class UserServicesImpl implements UserServices{
 			throw new UserAlreadyExistsException(e.getMessage());
 		}
     }
+	
+	public Optional<UserModel> getUserById(String userId) throws UserNotFoundException {
+		
+		try {
+			Optional<UserModel> user = Optional.ofNullable(this.userRepository.findById(userId)).get();
+			if (!user.isPresent()) {
+				return user;
+			} else {
+				throw new UserNotFoundException("UserNotFoundException");
+			}
+		} catch (Exception e) {
+			throw new UserNotFoundException("UserNotFoundException");
+		}
+	}
+	
+    @Override
+    public UserModel findByUserIdAndPassword(String userId, String password) throws UserNotFoundException {
+
+    	return userRepository.findByUserIdAndUserPassword(userId, password);
+    }
+	
+//	public UserModel updateUser(String userId,UserModel user) throws UserNotFoundException {
+//
+//		try {
+//			userRepository.save(user);
+//			return userRepository.findById(userId).get();
+//		}
+//		catch(Exception e) {
+//			throw new UserNotFoundException("User not found");
+//		}
+//	}
+
+//	public boolean deleteUser(String userId) throws UserNotFoundException {
+//		
+//		try {
+//			userRepository.deleteById(userId);
+//			return true;
+//		} 
+//		catch (Exception e) {
+//			throw new UserNotFoundException("UserNotFoundException");
+//		}
+//		
+//		UserModel user = userRepository.findById(userId).get();
+//		if(user == null) throw new UserNotFoundException("UserNotFoundExceptoin");
+//		userRepository.delete(user);
+//		return true;
+//	}
+	
 }

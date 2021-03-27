@@ -1,31 +1,40 @@
 package com.stackroute.userservice.model;
 
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.lang.NonNull;
+
 @Entity
-@Table(name = "User")
+@Table(name = "UserModel")
 public class UserModel {
 	
 	@Id
+	//@GeneratedValue(strategy = GenerationType.AUTO)
 	private String userId;
+	
+	@NonNull
 	private String userName;
 	private String userPassword;
-	private String userImage;
+	//private String userImage;
 	private Date userAddedDate;
 	
 	public UserModel() {
+		
 	}
 	
-	public UserModel(String string, String string1, String string2, String string3, Date date) {
-		this.userId = string;
-		this.userName =  string1;
-		this.userPassword = string2;
-		this.userImage = string3;
-		this.userAddedDate = date;
+	public UserModel(String userId, String userName, String userPassword, Date userAddedDate) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userPassword = userPassword;
+		//this.userImage = userImage;
+		this.userAddedDate = userAddedDate;
 	}
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -44,12 +53,12 @@ public class UserModel {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-	public String getUserImage() {
-		return userImage;
-	}
-	public void setUserImage(String userImage) {
-		this.userImage = userImage;
-	}
+//	public String getUserImage() {
+//		return userImage;
+//	}
+//	public void setUserImage(String userImage) {
+//		this.userImage = userImage;
+//	}
 	public Date getUserAddedDate() {
 		return userAddedDate;
 	}

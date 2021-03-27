@@ -7,5 +7,5 @@ import com.stackroute.userservice.model.UserModel;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserModel, String> {
-	UserModel findByUserIdAndUserPassword(String userId, String userPassword);
+	UserModel findByUserNameAndUserPassword(String userName, String userPassword);
 }

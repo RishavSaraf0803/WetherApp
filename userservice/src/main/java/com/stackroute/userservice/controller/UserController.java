@@ -53,9 +53,9 @@ public class UserController {
 		
 		Map<String, String> map = new HashMap<>();
 		try {
-			user.setUserAddedDate(new Date());
-			if(userServices.findByUserIdAndPassword(user.getUserId(), user.getUserPassword()) != null) {
-				String jwtToken = getToken(user.getUserId(), user.getUserPassword());
+			//user.setUserAddedDate(new Date());
+			if(userServices.findByUserNameAndPassword(user.getUserName(), user.getUserPassword()) != null) {
+				String jwtToken = getToken(user.getUserName(), user.getUserPassword());
 				map.put("token", jwtToken);
 				map.put("message", "user logged in successfully");
 				return new ResponseEntity<>(map,HttpStatus.OK);
@@ -83,9 +83,9 @@ public class UserController {
         
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/{userId}")
 	//@ApiImplicitParam(name = "Authorization", value = "Authorization Token", required = true, dataType = "string", paramType = "header")
-	public ResponseEntity<?> getUser(@PathVariable("id") String userId) {
+	public ResponseEntity<?> getUser(@PathVariable("userId") String userId) {
 		
 		try {
 			if (userServices.getUserById(userId) != null) {

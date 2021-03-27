@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.stackroute.userservice.exceptions.UserAlreadyExistsException;
+import com.stackroute.userservice.exceptions.UserIdAndPasswordMismatchException;
 import com.stackroute.userservice.exceptions.UserNotFoundException;
 import com.stackroute.userservice.model.UserModel;
 import com.stackroute.userservice.repositroy.UserRepository;
@@ -20,23 +21,23 @@ public class UserServicesImpl implements UserServices{
 	
 	public UserModel registerUser(UserModel user) throws UserAlreadyExistsException {
 
-		UserModel newUser = userRepository.save(user);
+//		UserModel newUser = userRepository.save(user);
+//		
+//		if(newUser != null)
+//			return newUser;
+//		throw new UserAlreadyExistsException("User already exists!");
 		
-		if(newUser != null)
-			return newUser;
-		throw new UserAlreadyExistsException("User already exists!");
-		
-//		try {
-//			Optional<UserModel> newUser = Optional.ofNullable(this.userRepository.findById(user.getUserId())).get();
-//			if (!newUser.isPresent()) {
-//				this.userRepository.save(user);
-//				return newUser;
-//			}else {
-//				throw new UserAlreadyExistsException("Cannot Register User");
-//			}
-//		} catch (Exception e) {
-//			throw new UserAlreadyExistsException(e.getMessage());
-//		}
+		try {
+			Optional<UserModel> newUser = Optional.ofNullable(this.userRepository.findById(user.getUserId())).get();
+			if (!newUser.isPresent()) {
+				this.userRepository.save(user);
+				return user;
+			}else {
+				throw new UserAlreadyExistsException("Cannot Register User");
+			}
+		} catch (Exception e) {
+			throw new UserAlreadyExistsException(e.getMessage());
+		}
 	}
 	
     @Override
@@ -70,9 +71,9 @@ public class UserServicesImpl implements UserServices{
 	}
 	
     @Override
-    public UserModel findByUserIdAndPassword(String userId, String password) throws UserNotFoundException {
+    public UserModel findByUserNameAndPassword(String userName, String password) throws UserNotFoundException, UserIdAndPasswordMismatchException {
 
-    	return userRepository.findByUserIdAndUserPassword(userId, password);
+    	return userRepository.findByUserNameAndUserPassword(userName, password);
     }
 	
 //	public UserModel updateUser(String userId,UserModel user) throws UserNotFoundException {

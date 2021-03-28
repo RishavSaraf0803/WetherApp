@@ -10,14 +10,14 @@ public class SubscriptionUser {
 
 	@Id
 	String userId;
-	List<String> subsList;
+	List<Feature> subsList;
 	
 	
 	
 	public SubscriptionUser() {
 		super();
 	}
-	public SubscriptionUser(String userId, List<String> subsList) {
+	public SubscriptionUser(String userId, List<Feature> subsList) {
 		super();
 		this.userId = userId;
 		this.subsList = subsList;
@@ -28,10 +28,10 @@ public class SubscriptionUser {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public List<String> getSubsList() {
+	public List<Feature> getSubsList() {
 		return subsList;
 	}
-	public void setSubsList(List<String> subsList) {
+	public void setSubsList(List<Feature> subsList) {
 		this.subsList = subsList;
 	}
 	

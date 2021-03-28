@@ -3,6 +3,7 @@ package com.stackroute.subscriptionservice.service;
 import java.util.List;
 
 import com.stackroute.subscriptionservice.exception.SubscriptionsNotFoundException;
+import com.stackroute.subscriptionservice.model.Feature;
 
 
 public interface SubscriptionService {
@@ -13,8 +14,8 @@ public interface SubscriptionService {
 //	boolean removeSubscription(String subscriptionId)throws SubscriptionsNotFoundException;
 //	Subscription updateSubscription(Subscription subcription) throws SubscriptionsNotFoundException;
 
-	boolean subscribe(String userId,String feature);
-	boolean unsubscribe(String userId, String feature) throws SubscriptionsNotFoundException;
-	List<String> getAllSubscription(String userId) throws SubscriptionsNotFoundException;
+	boolean subscribe(Feature feature);
+	boolean unsubscribe(Feature feature) throws SubscriptionsNotFoundException;
+	List<Feature> getAllSubscription(String userId) throws SubscriptionsNotFoundException;
 	
 }

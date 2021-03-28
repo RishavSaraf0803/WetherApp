@@ -1,69 +1,129 @@
 package com.stackroute.userservice.model;
 
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-import org.springframework.lang.NonNull;
+import org.hibernate.annotations.NaturalId;
+
 
 @Entity
-@Table(name = "UserModel")
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+            "username"
+        }),
+        @UniqueConstraint(columnNames = {
+            "email"
+        })
+})
 public class UserModel {
 	
+//	@Id
+//	//@GeneratedValue(strategy = GenerationType.AUTO)
+//	private int userId;
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
-	private String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 	
-	@NonNull
-	private String userName;
-	private String userPassword;
-	//private String userImage;
-	private Date userAddedDate;
-	
-	public UserModel() {
-		
+	@NotBlank
+    @Size(min=3, max = 50)
+    private String name;
+
+    @NotBlank
+    @Size(min=3, max = 50)
+    private String username;
+
+    @NaturalId
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
+
+    @NotBlank
+    @Size(min=6, max = 100)
+    private String password;
+    
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles", 
+    	joinColumns = @JoinColumn(name = "user_id"), 
+    	inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+    
+    public UserModel() {}
+
+    public UserModel(String name, String username, String email, String password) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 	
-	public UserModel(String userId, String userName, String userPassword, Date userAddedDate) {
-		super();
-		this.userId = userId;
-		this.userName = userName;
-		this.userPassword = userPassword;
-		//this.userImage = userImage;
-		this.userAddedDate = userAddedDate;
-	}
-	
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	public String getUserPassword() {
-		return userPassword;
-	}
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
-//	public String getUserImage() {
-//		return userImage;
-//	}
-//	public void setUserImage(String userImage) {
-//		this.userImage = userImage;
-//	}
-	public Date getUserAddedDate() {
-		return userAddedDate;
-	}
-	public void setUserAddedDate(Date userAddedDate) {
-		this.userAddedDate = userAddedDate;
-	}
+//	@NonNull
+//	private String userName;
+//	private String userPassword;
+//	//private String userImage;
+//	//private Date userAddedDate;
+//	private String userEmail;
 	
 }

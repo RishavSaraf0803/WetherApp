@@ -9,3 +9,7 @@ spring:
       show-sql: true
 server:
   port: 8081
+  
+# App Properties
+weather.app.jwtSecret: jwtWeatherApp.comSecretKey
+weather.app.jwtExpiration: 86400

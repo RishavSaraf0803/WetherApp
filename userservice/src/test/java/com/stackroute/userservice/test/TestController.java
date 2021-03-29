@@ -2,9 +2,6 @@ package com.stackroute.userservice.test;
 
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -16,14 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.stackroute.userservice.controller.UserController;
+import com.stackroute.userservice.messages.JwtResponse;
+import com.stackroute.userservice.messages.LoginForm;
+import com.stackroute.userservice.messages.SignUpForm;
 import com.stackroute.userservice.model.UserModel;
-import com.stackroute.userservice.services.UserServices;
+import com.stackroute.userservice.services.UserDetailsServiceImpl;
 
 
 @SpringBootTest
@@ -34,7 +35,8 @@ public class TestController {
 	private UserController userController;
 	
 	@Mock
-	private UserServices userService;
+	private UserDetailsServiceImpl userService;
+	private ResponseEntity<String> regResponse;
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -48,51 +50,66 @@ public class TestController {
 	@Test
 	public void testRegisterUserSuccess() throws Exception {
 		
-		UserModel user = new UserModel();
-        user.setUserId(1);
-        user.setUserName("Jai");
-        user.setUserPassword("123456");
-        user.setUserEmail("jai@gmail.com");
+		//UserModel user = new UserModel();
+		SignUpForm form = new SignUpForm();
+		form.setName("Jaivrat");
+		form.setUsername("jai");
+		form.setPassword("123456789");
+		form.setEmail("jai@gmail.com");
+//        user.setUserId(1);
+//        user.setUserName("Jai");
+//        user.setUserPassword("123456");
+//        user.setUserEmail("jai@gmail.com");
         //user.setUserAddedDate(new Date());
 		
-		when(userService.registerUser(user)).thenReturn(user);
+		when(userController.registerUser(form)).thenReturn(regResponse);
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/user/register").contentType(MediaType.APPLICATION_JSON))
 					.andExpect(MockMvcResultMatchers.status().isOk());
 
 	}
 	
-//	@Test
-//	public void testRegisterUserFailure() throws Exception {
-//		
+	@Test
+	public void testRegisterUserFailure() throws Exception {
+		
+		SignUpForm form = new SignUpForm();
+		form.setName("Jaivrat");
+		form.setUsername("jai");
+		form.setPassword("123456789");
+		form.setEmail("jai@gmail.com");
+		
 //		UserModel user1 = new UserModel();
 //        user1.setUserId(1);
 //        user1.setUserName("Jai");
 //        user1.setUserPassword("123456");
 //        user1.setUserEmail("jai@gmail.com");
-//        //user1.setUserAddedDate(new Date());
-//		
-//		when(userService.registerUser(user1)).thenReturn(user1);
-//		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/user/register").contentType(MediaType.APPLICATION_JSON))
-//					.andExpect(MockMvcResultMatchers.status().isConflict());
-//
-//	}
-//	
+        //user1.setUserAddedDate(new Date());
+		
+		when(userController.registerUser(form)).thenReturn(regResponse);
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/user/register").contentType(MediaType.APPLICATION_JSON))
+					.andExpect(MockMvcResultMatchers.status().isConflict());
+
+	}
+	
 //	@Test
 //	public void testLoginUserSuccess() throws Exception {
 //		
-//		UserModel user2 = new UserModel();
-//        user2.setUserId(1);
-//        user2.setUserName("Jai");
-//        user2.setUserPassword("123456");
-//        user2.setUserEmail("jai@gmail.com");
+//		LoginForm form = new LoginForm();
+//		form.setUsername("jai");
+//		form.setPassword("123456789");
+////		UserModel user2 = new UserModel();
+////        user2.setUserId(1);
+////        user2.setUserName("Jai");
+////        user2.setUserPassword("123456");
+////        user2.setUserEmail("jai@gmail.com");
 //        //user2.setUserAddedDate(new Date());
 //		
-//		when(userService.findByUserNameAndPassword(user2.getUserName(), user2.getUserPassword())).thenReturn(user2);
+//		//when(userService.findByUserNameAndPassword(user2.getUserName(), user2.getUserPassword())).thenReturn(user2);
+//		when(userController.authenticateUser(form)).thenReturn(new JwtResponse(token));
 //		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/user/login").contentType(MediaType.APPLICATION_JSON))
 //					.andExpect(MockMvcResultMatchers.status().isOk());
 //
 //	}
-//	
+	
 //	@Test
 //	public void testLoginUserFailure() throws Exception {
 //		
@@ -108,7 +125,7 @@ public class TestController {
 //					.andExpect(MockMvcResultMatchers.status().isUnauthorized());
 //
 //	}
-//	
+	
 //	@Test
 //	public void getUserByIdTestSuccess() throws Exception {
 //		

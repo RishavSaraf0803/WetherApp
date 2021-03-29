@@ -1,8 +1,12 @@
 package com.stackroute.userservice.messages;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 public class SignUpForm {
     @NotBlank
@@ -18,7 +22,7 @@ public class SignUpForm {
     @Email
     private String email;
     
-    private Set<String> role;
+    private Set<String> role = new HashSet<>(Arrays.asList("user"));
     
     @NotBlank
     @Size(min = 6, max = 40)

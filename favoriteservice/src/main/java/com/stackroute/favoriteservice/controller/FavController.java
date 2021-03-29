@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.stackroute.favoriteservice.model.FavModel;
 import com.stackroute.favoriteservice.service.FavService;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("api/v1/fav")
 public class FavController {
-
-	
 	
 	@Autowired
 	private FavService service;
@@ -29,7 +29,6 @@ public class FavController {
 	public FavController(FavService service) {
 		this.service = service;
 	}
-	
 	
 	@PostMapping("/{userId}/{city}")
 	public ResponseEntity<?> addCity(@PathVariable String userId, @PathVariable String city) {
@@ -39,6 +38,15 @@ public class FavController {
 		else
 			return new ResponseEntity<String>("Couldn't add city",HttpStatus.CONFLICT);
 	}
+//	
+//	@PostMapping
+//	public ResponseEntity<?> addCity(@RequestBody FavModel fav) {
+//		boolean status = service.addCity(fav.getUserId(), fav.getList().get(0));
+//		if(status)
+//			return new ResponseEntity<String>("Successfully added city",HttpStatus.CREATED);
+//		else
+//			return new ResponseEntity<String>("Couldn't add city",HttpStatus.CONFLICT);
+//	}
 	
 	@GetMapping("/{userId}")
 	public ResponseEntity<?> getAllCities(@PathVariable String userId) {

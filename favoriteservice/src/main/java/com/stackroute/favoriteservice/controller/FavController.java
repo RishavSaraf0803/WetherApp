@@ -54,7 +54,7 @@ public class FavController {
 		if(!list.isEmpty())
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		else
-			return new ResponseEntity<>("You have not added any city", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(list, HttpStatus.OK);
 			
 	}
 

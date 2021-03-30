@@ -45,9 +45,17 @@ public class FavService {
 	}
 	
 	public List<String> getAllCities(String userId) {
-		fav = repository.findById(userId).get();
-		List<String> list = fav.getList();
-		return list;
+		boolean flag = repository.existsById(userId);
+		if(flag) {
+			fav = repository.findById(userId).get();
+			List<String> list = fav.getList();
+			return list;
+		}
+		else {
+			List<String> list = new ArrayList<> ();
+			list.clear();
+			return list;
+		}
 	}
 	
 	public boolean deleteCity(String userId, String city) {

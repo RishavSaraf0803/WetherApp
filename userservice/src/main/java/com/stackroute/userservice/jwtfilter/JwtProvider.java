@@ -22,10 +22,12 @@ public class JwtProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
-    @Value("${weather.app.jwtSecret}")
+//    @Value("${weather.app.jwtSecret}")
+    @Value("jwtWeatherApp.comSecretKey")
     private String jwtSecret;
 
-    @Value("${weather.app.jwtExpiration}")
+//    @Value("${weather.app.jwtExpiration}")
+    @Value("86400")
     private int jwtExpiration;
 
     public String generateJwtToken(Authentication authentication) {

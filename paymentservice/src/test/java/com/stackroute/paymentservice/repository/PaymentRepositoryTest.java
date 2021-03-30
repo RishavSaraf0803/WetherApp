@@ -16,11 +16,11 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 public class PaymentRepositoryTest {
 
     @Autowired
-    private PaymentServiceRepository paymentRepository;
-    private PaymentServiceModel payment;
+    private static PaymentServiceRepository paymentRepository;
+    private static PaymentServiceModel payment;
 
     @BeforeAll
-    public void setUp() throws Exception {
+    public static void setUp() throws Exception {
 
         payment = new PaymentServiceModel();
         payment.setCardNo("123456789");
@@ -35,7 +35,7 @@ public class PaymentRepositoryTest {
         assertEquals(actualPayment.getCardNo(),payment.getCardNo());
     }
     @AfterAll
-    public void tearDown() throws Exception {
+    public static void tearDown() throws Exception {
 
         paymentRepository.deleteAll();
     }

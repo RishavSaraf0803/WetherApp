@@ -34,12 +34,14 @@ public class JwtProvider {
 
         UserPrinciple userPrincipal = (UserPrinciple) authentication.getPrincipal();
 
-        return Jwts.builder()
+        String jwt = Jwts.builder()
 		                .setSubject((userPrincipal.getUsername()))
 		                .setIssuedAt(new Date())
 		                .setExpiration(new Date((new Date()).getTime() + jwtExpiration*1000))
 		                .signWith(SignatureAlgorithm.HS512, jwtSecret)
 		                .compact();
+        logger.debug(jwt);
+        return jwt;
     }
     
     public boolean validateJwtToken(String authToken) {

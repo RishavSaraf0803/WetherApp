@@ -24,6 +24,9 @@ public class FavService {
 		if(repository.existsById(userId)) {
 			fav = repository.findById(userId).get();
 			List<String> list = fav.getList();
+			boolean flag = list.contains(cityName);
+			if(flag)
+				return true;
 			list.add(cityName);
 			fav.setList(list);
 			if(repository.save(fav) != null)

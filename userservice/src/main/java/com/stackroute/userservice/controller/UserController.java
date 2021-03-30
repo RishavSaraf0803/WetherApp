@@ -1,5 +1,6 @@
 package com.stackroute.userservice.controller;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -60,9 +61,16 @@ public class UserController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        HashMap<String, String> map = new HashMap<String, String>();
+      
+        
 
         String jwt = jwtProvider.generateJwtToken(authentication);
-        return ResponseEntity.ok(new JwtResponse(jwt));
+        map.put("username", loginRequest.getUsername());
+        map.put("accessToken", jwt);
+        
+//        return ResponseEntity.ok(new JwtResponse(jwt));
+        return new ResponseEntity(map, HttpStatus.OK);
     }
 
     @PostMapping("/signup")

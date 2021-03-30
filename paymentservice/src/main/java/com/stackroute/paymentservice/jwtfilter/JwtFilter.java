@@ -46,7 +46,7 @@ public class JwtFilter extends GenericFilterBean {
                 String token = authHeader.split(" ")[1];
                 System.out.println(authHeader);
                 System.out.println(token);
-                Claims claims = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(token).getBody();
+                Claims claims = Jwts.parser().setSigningKey("weather.app.jwtSecret").parseClaimsJws(token).getBody();
                 request.setAttribute("claims",claims);
                 chain.doFilter(req,res);
             }

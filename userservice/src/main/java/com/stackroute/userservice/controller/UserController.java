@@ -66,7 +66,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
         if(userRepository.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity<String>("Username is already taken!",
                     HttpStatus.CONFLICT);
@@ -108,7 +108,8 @@ public class UserController {
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok().body("User registered successfully!");
+//        return ResponseEntity.ok().body("User registered successfully!");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

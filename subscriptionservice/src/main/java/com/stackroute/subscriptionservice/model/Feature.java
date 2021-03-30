@@ -49,6 +49,11 @@ public class Feature {
 	public void setFeaturePrice(String featurePrice) {
 		this.featurePrice = featurePrice;
 	}
+	@Override
+	public String toString() {
+		return "Feature [featureName=" + featureName + ", featureSubscribeBy=" + featureSubscribeBy
+				+ ", featureSubscribeDate=" + featureSubscribeDate + ", featurePrice=" + featurePrice + "]";
+	}
 	
 	
 }

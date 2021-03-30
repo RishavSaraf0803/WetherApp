@@ -22,22 +22,26 @@ public class JwtProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
-    @Value("${weather.app.jwtSecret}")
+//    @Value("${weather.app.jwtSecret}")
+    @Value("jwtWeatherApp.comSecretKey")
     private String jwtSecret;
 
-    @Value("${weather.app.jwtExpiration}")
+//    @Value("${weather.app.jwtExpiration}")
+    @Value("86400")
     private int jwtExpiration;
 
     public String generateJwtToken(Authentication authentication) {
 
         UserPrinciple userPrincipal = (UserPrinciple) authentication.getPrincipal();
 
-        return Jwts.builder()
+        String jwt = Jwts.builder()
 		                .setSubject((userPrincipal.getUsername()))
 		                .setIssuedAt(new Date())
 		                .setExpiration(new Date((new Date()).getTime() + jwtExpiration*1000))
 		                .signWith(SignatureAlgorithm.HS512, jwtSecret)
 		                .compact();
+        logger.debug(jwt);
+        return jwt;
     }
     
     public boolean validateJwtToken(String authToken) {

@@ -4,11 +4,9 @@ spring:
       host: localhost
       port: 27017
       database: PaymentDB
-# spring:
-#  data:
-#    mongodb:
-#      uri: mongodb+srv://root:<root>@cluster0.eekpb.mongodb.net/PaymentDB?retryWrites=true&w=majority
-#      database: PaymentDB
 server:
   port: 8082
+      
     
+#spring.data.mongodb.uri=mongodb+srv://root:<password>@cluster0.eekpb.mongodb.net/PaymentDB?retryWrites=true&w=majority
+#spring.data.mongodb.database=paymentDB

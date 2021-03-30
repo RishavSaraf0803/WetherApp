@@ -1,5 +1,6 @@
 package com.stackroute.userservice.controller;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -60,13 +61,20 @@ public class UserController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        HashMap<String, String> map = new HashMap<String, String>();
+      
+        
 
         String jwt = jwtProvider.generateJwtToken(authentication);
-        return ResponseEntity.ok(new JwtResponse(jwt));
+        map.put("username", loginRequest.getUsername());
+        map.put("accessToken", jwt);
+        
+//        return ResponseEntity.ok(new JwtResponse(jwt));
+        return new ResponseEntity(map, HttpStatus.OK);
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
         if(userRepository.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity<String>("Username is already taken!",
                     HttpStatus.CONFLICT);
@@ -108,7 +116,8 @@ public class UserController {
         user.setRoles(roles);
         userRepository.save(user);
 
-        return ResponseEntity.ok().body("User registered successfully!");
+//        return ResponseEntity.ok().body("User registered successfully!");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

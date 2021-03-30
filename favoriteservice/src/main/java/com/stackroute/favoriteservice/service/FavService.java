@@ -24,6 +24,9 @@ public class FavService {
 		if(repository.existsById(userId)) {
 			fav = repository.findById(userId).get();
 			List<String> list = fav.getList();
+			boolean flag = list.contains(cityName);
+			if(flag)
+				return true;
 			list.add(cityName);
 			fav.setList(list);
 			if(repository.save(fav) != null)
@@ -45,9 +48,17 @@ public class FavService {
 	}
 	
 	public List<String> getAllCities(String userId) {
-		fav = repository.findById(userId).get();
-		List<String> list = fav.getList();
-		return list;
+		boolean flag = repository.existsById(userId);
+		if(flag) {
+			fav = repository.findById(userId).get();
+			List<String> list = fav.getList();
+			return list;
+		}
+		else {
+			List<String> list = new ArrayList<> ();
+			list.clear();
+			return list;
+		}
 	}
 	
 	public boolean deleteCity(String userId, String city) {

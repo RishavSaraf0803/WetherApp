@@ -29,14 +29,19 @@ public class JwtFilter extends GenericFilterBean{
 			chain.doFilter(req, res);
 		} 
 		else {
-			if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-				throw new ServletException("Missing or invalid Authorization header");
-			}
-			final String token = authHeader.substring(7);
-			final Claims claims = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(token).getBody();
-			request.setAttribute("claims", claims);
-			chain.doFilter(req, res);
-		}
+            try {
+                String token = authHeader.split(" ")[1];
+                System.out.println(authHeader);
+                System.out.println(token);
+                Claims claims = Jwts.parser().setSigningKey("jwtWeatherApp.comSecretKey").parseClaimsJws(token).getBody();
+                request.setAttribute("claims",claims);
+                chain.doFilter(req,res);
+            }
+            catch (Exception e){
+                System.out.println("Access denied");
+                throw new ServletException("Access denied or Invalid user");
+
+            }
 
 
     }
